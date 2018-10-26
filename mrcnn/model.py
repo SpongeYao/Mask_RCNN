@@ -3235,7 +3235,7 @@ def mobilenet_unmold_image(normalized_images, config):
 #  Miscellenous Graph Functions
 ############################################################
 
-def trim_zeros_graph(boxes, name=None):
+def trim_zeros_graph(boxes, name='trim_zeros'):
     """Often boxes are represented with matrices of shape [N, 4] and
     are padded with zeros. This removes zero boxes.
 
