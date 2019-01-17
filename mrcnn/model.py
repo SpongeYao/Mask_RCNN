@@ -2265,6 +2265,7 @@ class MaskRCNN():
         if callable(config.BACKBONE):
             _, C2, C3, C4, C5 = config.BACKBONE(input_image, stage5=True,
                                                 train_bn=config.TRAIN_BN)
+
         elif config.BACKBONE in ["mobilenet224v1"]:
             _, C2, C3, C4, C5 = mobilenet_graph(input_image, config.BACKBONE, 
                                                 alpha=1.0, train_bn=config.TRAIN_BN)
@@ -2272,6 +2273,7 @@ class MaskRCNN():
             _, C2, C3, C4, C5 = resnet_graph(input_image, config.BACKBONE,
                                              stage5=True, train_bn=config.TRAIN_BN)
         
+
         # Top-down Layers
         # TODO: add assert to varify feature map sizes match what's in config
         P5 = KL.Conv2D(config.TOP_DOWN_PYRAMID_SIZE, (1, 1), name='fpn_c5p5')(C5)
@@ -3218,9 +3220,8 @@ def resnet_unmold_image(normalized_images, config):
 
 
 def mobilenet_mold_image(images, config):
-    """Expects an RGB image (or array of images) and subtracts
-    the mean pixel and converts it to float. Expects image
-    colors in RGB order.
+    """Expects an RGB image (or array of images) and normalizes. 
+    Expects image colors in RGB order.
     """
     return images.astype(np.float32)/127.5 - 1.0
 
